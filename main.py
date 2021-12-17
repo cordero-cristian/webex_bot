@@ -1,12 +1,21 @@
 import random
 import time
+import sys
+print(sys.path)
 from webex_bot.webex_bot_functions import webex_bot_functions
 from bot_commands.bot_commands import bot_commands
 from message_parser.message_parser import webex_message_parser
+import yaml
+with open('./config.yml') as file:
+    configDict = yaml.load(file, Loader=yaml.FullLoader)
+roomId = configDict['roomId']
+roomName = configDict['roomName']
 
 botFuncs = webex_bot_functions()
 botCommands = bot_commands()
-roomID = 'Y2lzY29zcGFyazovL3VzL1JPT00vOWY4MGVjYjEtZTRhNy0xMWViLTk3ZWQtOTE5NmRjM2EzYmYy'
+
+#cs Network team room id
+#roomID = 'Y2lzY29zcGFyazovL3VzL1JPT00vOWY4MGVjYjEtZTRhNy0xMWViLTk3ZWQtOTE5NmRjM2EzYmYy'
 listOfCommand = [
     '!details <hostname> : get ip, os_type',
     '!em7 <hostname> : get sl1/em7 details',
@@ -50,7 +59,7 @@ while True:
                 param1 = None
             if command == 'ood':
                 string = random.choice(listOfAnimalSounds)
-                botFuncs.send_message(string, groupTitle='BOT TEST - BETA Testing')
+                botFuncs.send_message(string, groupTitle=roomName)
             if command == 'details':
                 html = botCommands.details(param1)
                 messageStr = f"``` \n{html}\n ```"
@@ -88,7 +97,7 @@ while True:
                 for strCommand in listOfCommand:
                     messageStr += f'{strCommand} \n'
                 messageStr += '```'
-                botFuncs.send_message(messageStr, groupTitle='BOT TEST - BETA Testing', markdown=True)
+                botFuncs.send_message(messageStr, groupTitle=roomName, markdown=True)
             # running config is too big to send over teams
             # if command == 'run_config':
             #     runConfigList = botCommands.running_connfig(param1)

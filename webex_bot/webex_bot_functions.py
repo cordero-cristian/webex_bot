@@ -1,9 +1,14 @@
 from logging_functions import logger
 from webex_bot.message_functions import messenger
 from request_functions.request_functions import request_functions_base
-from webex_bot.creds import apiKey
 import time
 from pprint import pprint
+import yaml
+with open('../config.yml') as file:
+    configDict = yaml.load(file, Loader=yaml.FullLoader)
+
+apiKey = configDict['apiKey']
+
 API_URL = 'https://webexapis.com/v1/'
 FLEX_WEBEX_ORG_ID = 'Y2lzY29zcGFyazovL3VzL09SR0FOSVpBVElPTi84MWRmNDA2MC0zNjU0LTRjZmYtYTNhYi05NDZkMDkxMDY4MGY'
 DEFAULT_GROUP_TITLE = 'Network Automation Team'
